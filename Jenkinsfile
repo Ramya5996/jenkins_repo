@@ -1,12 +1,12 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_HUB_CREDENTIALS = credentials('ramyasritiru_jenkins')  // Update with your Docker Hub credentials ID
-        IMAGE_NAME = 'my-node-app'
-        DOCKERFILE_PATH = 'Dockerfile'  // Path to your Dockerfile relative to Jenkins workspace
-        DOCKER_HUB_REPO = 'ramyasritiru/my-node-app'  // Update with your Docker Hub repository name
-    }
+    // environment {
+    //     DOCKER_HUB_CREDENTIALS = credentials('ramyasritiru_jenkins')  // Update with your Docker Hub credentials ID
+    //     IMAGE_NAME = 'my-node-app'
+    //     DOCKERFILE_PATH = 'Dockerfile'  // Path to your Dockerfile relative to Jenkins workspace
+    //     DOCKER_HUB_REPO = 'ramyasritiru/my-node-app'  // Update with your Docker Hub repository name
+    // }
 
     stages {
         stage('Build and Push Image') {

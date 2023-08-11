@@ -1,27 +1,24 @@
 pipeline {
     agent any
-
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('jyothi5579_jenkins')  // Update with your Docker Hub credentials ID
-        IMAGE_NAME = 'my-node-app'
-        DOCKERFILE_PATH = 'Dockerfile'  // Path to your Dockerfile relative to Jenkins workspace
-        DOCKER_HUB_REPO = 'jyothi5579/my-node-app'  // Update with your Docker Hub repository name
+        DOCKERHUB_CREDENTIALS = credentials('jyothi5579_jenkins')
     }
-
     stages {
-        stage('Checkout') {
+        stage('SCM Checkout') {
             steps {
-                checkout scm
+                git 'https://github.com/jsilaparasetti/jenkins_repo.git'
             }
         }
-
-        stage('Build and Push Image') {
+        stage('Build docker image') {
+            steps {
+                sh "docker build -t galaxy/nodeapp:$BUILD_NUMBER ."
+            }
+        }
+        stage('Login to DockerHub') {
             steps {
                 script {
-                    def dockerImage = docker.build("${env.DOCKER_HUB_REPO}:${env.BUILD_NUMBER}", "-f ${env.DOCKERFILE_PATH} .")
-                    docker.withRegistry('https://registry.hub.docker.com', env.DOCKER_HUB_CREDENTIALS) {
-                        dockerImage.push()
-                    }
+                    def dockerHubCreds = credentials('jyothi5579_jenkins')
+                    sh "echo ${dockerHubCreds.PSW} | docker login -u ${dockerHubCreds.USR} --password-stdin"
                 }
             }
         }

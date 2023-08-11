@@ -1,5 +1,5 @@
-pipeline {
-    agent any
+//pipeline {
+  //  agent any
 
     // environment {
     //     DOCKER_HUB_CREDENTIALS = credentials('ramyasritiru_jenkins')  // Update with your Docker Hub credentials ID
@@ -8,7 +8,8 @@ pipeline {
     //     DOCKER_HUB_REPO = 'ramyasritiru/my-node-app'  // Update with your Docker Hub repository name
     // }
 
-    stages {
+   // stages {
+node {
         stage('Build and Push Image') {
             steps {
                 script {
@@ -21,4 +22,4 @@ pipeline {
             }
         }
     }
-}
+//}
